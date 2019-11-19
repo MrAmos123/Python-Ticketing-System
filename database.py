@@ -16,7 +16,7 @@ class Database:
             self.db_connection = sqlite3.connect('database.db')
             self.db_cursor = self.db_connection.cursor()
             self.db_cursor.execute('CREATE TABLE tickets (tid INTEGER PRIMARY KEY AUTOINCREMENT, \
-                                    ticketid TEXT NOT NULL, raisedby TEXT NOT NULL, assignedto TEXT NOT NULL, description TEXT NOT NULL)')
+                                    assignedto TEXT NOT NULL, description TEXT NOT NULL)')
             self.db_connection.commit()
 
     def ent_data(self, user_raisedby, user_shortdesc):

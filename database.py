@@ -1,5 +1,7 @@
 import sqlite3
 import os
+import random
+import string
 
 class Database:
     def __init__(self):
@@ -10,17 +12,14 @@ class Database:
         if os.path.exists('database.db'):
             self.db_connection = sqlite3.connect('database.db')
             self.db_cursor = self.db_connection.cursor()
-            print("IN DB EXIST")
         else:
             self.db_connection = sqlite3.connect('database.db')
             self.db_cursor = self.db_connection.cursor()
             self.db_cursor.execute('CREATE TABLE tickets (tid INTEGER PRIMARY KEY AUTOINCREMENT, \
-                                    raisedby TEXT NOT NULL, assignedto TEXT NOT NULL, description TEXT NOT NULL)')
+                                    ticketid TEXT NOT NULL, raisedby TEXT NOT NULL, assignedto TEXT NOT NULL, description TEXT NOT NULL)')
             self.db_connection.commit()
-            print("IN DB NOT EXIST")
 
     def ent_data(self, user_raisedby, user_shortdesc):
-        print("IN ENT DATA")
         # Placeholder
         user_assignedto = 'Jeff'
         self.db_cursor.execute('SELECT * FROM tickets ORDER BY tid DESC LIMIT 1')
@@ -29,5 +28,6 @@ class Database:
                                (user_raisedby if len(user_raisedby) > 0 else None,
                                 user_shortdesc if len(user_shortdesc) > 0 else None, user_assignedto))
 
+    def close_cursor(self):
         self.db_connection.commit()
         self.db_cursor.close()
